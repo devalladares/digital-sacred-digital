@@ -82,7 +82,7 @@ const renderer = new THREE.WebGLRenderer({
 })
 renderer.setSize(sizes.width, sizes.height)
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
-renderer.setClearColor('#e0e4bb')
+renderer.setClearColor('#e5ebdf')
 
 /////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////
@@ -100,45 +100,48 @@ var dirControls = lightControls.addFolder('Direction Light');
 // let updateColor = () => {
 
 const cols = {
-  color1: '#f19b7b',
-  color2: '#e3774d',
-  color3: 0x00ff00,
-  color4: '#d8c8da'
+  color1: '#aabb4d',
+  // color2: '#0056ff',
+  color2: '#ff0505',
+  color3: 0x000000,
+  color3: 0xff00,
+  // color4: '#ffffff'
+  color4: '#d327f0'
 }
-
-
 
 ambentControls.addColor(cols, 'color1').onChange(() => {
   ambientLight.color.set(cols.color1)
 }).name('Color')
 
-
-
 dirControls.addColor(cols, 'color4').onChange(() => {
   dirLight.color.set(cols.color4)
 }).name('Color')
 
-
+hemControls.addColor(cols, 'color2').onChange(() => {
+  hemLight.color.set(cols.color2, cols.color3)
+}).name('Color1')
+// hemControls.addColor(cols, 'color3').onChange(() => {
+//   hemLight.color.set(cols.color2, cols.color3)
+// }).name('Color2')
 
 
 
 ambientLight = new THREE.AmbientLight()
-ambientLight.color = new THREE.Color(cols.color1)
-ambientLight.intensity = (0.7)
+ambientLight.intensity = (0.56)
+ambientLight.color.set(cols.color1)
 
-hemLight = new THREE.HemisphereLight('blue', 'green', 0.5)
+hemLight = new THREE.HemisphereLight(cols.color2, cols.color3, 0.5)
 hemLight.intensity = (0.7)
+hemLight.color.set(cols.color2, cols.color3, 0.5)
+// console.log(hemLight.color)
 
-hemControls.addColor(cols, 'color2').onChange(() => {
-  hemLight.color.set(cols.color2, cols.color3)
-}).name('Color')
 
 
 dirLight = new THREE.DirectionalLight()
-dirLight.color = new THREE.Color('blue')
 dirLight.position.set(1, 1, 1)
 dirLight.castShadow = true
-hemLight.intensity = (0.7)
+hemLight.intensity = (1.1)
+dirLight.color.set(cols.color4)
 
 
 scene.add(ambientLight)
@@ -202,8 +205,8 @@ function updateFont() {
       textGeometry = new THREE.TextGeometry(
         params.textField, {
           font: font,
-          size: 5,
-          height: 0.2,
+          size: params.size,
+          height: params.height,
           curveSegment: 1,
           bevelEnabled: false,
           bevelThickness: 0.01,
@@ -233,6 +236,7 @@ let material = null
 let sphere = null
 let group = null
 let cubeGroup = null
+let sphereGroup = null
 
 
 /**
@@ -250,6 +254,8 @@ params.ringNumber = 10
 params.emptySpace = .5
 params.hide = false
 params.textField = "Digital Sacred"
+params.size = 5
+params.height = 1
 
 
 
@@ -262,10 +268,12 @@ function generateMandala() {
     material.dispose()
     scene.remove(group)
     scene.remove(cubeGroup)
+    scene.remove(sphereGroup)
   }
 
   group = new THREE.Group();
   cubeGroup = new THREE.Object3D()
+  sphereGroup = new THREE.Object3D()
   material = new THREE.MeshBasicMaterial()
 
 
@@ -285,23 +293,21 @@ function generateMandala() {
  */
 function createRings(radiuser, distance, index) {
 
-  let randomiser = random(0, 8)
+  let randomiser = random(0, 12)
 
-  if (randomiser < 2.5) {
+  if (randomiser < 3) {
 
     createSphere(radiuser, distance, index)
 
-  } else if (randomiser > 2.5 && randomiser < 5) {
+  } else if (randomiser > 3 && randomiser < 7) {
 
     createTorus(radiuser, distance, index)
 
-  } else if (randomiser > 5) {
+  } else if (randomiser > 7) {
 
     createCubes(radiuser, distance, index)
 
   }
-
-  // createCubes(radiuser, distance, index)
 
 }
 
@@ -310,7 +316,10 @@ function createRings(radiuser, distance, index) {
  * Sphere
  */
 function createSphere(radiuser, distance, index) {
-  geometry = new THREE.SphereGeometry(random(0.05, 0.5), 32, 32)
+
+  let random5 = Math.round(random(2, 6))
+
+  geometry = new THREE.SphereGeometry(random(0.1, 0.5), random5, random5)
 
   let num = Math.round(random(16, 80))
   let angle = (Math.PI * 2) / num
@@ -323,7 +332,9 @@ function createSphere(radiuser, distance, index) {
     sphere = new THREE.Mesh(geometry, material2)
     sphere.position.set(x, y, distance)
 
-    group.add(sphere)
+
+    sphereGroup.add(sphere)
+    group.add(sphereGroup)
   }
 }
 
@@ -347,8 +358,11 @@ function createTorus(radiuser, distance, index) {
 function createCubes(radiuser, distance, index) {
 
   let scaler = 0.5
+  let r1 = random(0.2, 1)
+  let r2 = random(0.2, 1)
+  let r3 = random(0.2, 1)
 
-  geometry = new THREE.BoxGeometry(scaler, scaler, scaler)
+  geometry = new THREE.BoxGeometry(r1, r2, r3)
 
   let num = Math.round(random(16, 80))
   let angle = (Math.PI * 2) / num
@@ -403,6 +417,12 @@ mandala.add(params, 'spread').min(0).max(10).onFinishChange(generateMandala).nam
 textFolder.add(params, "textField").onFinishChange(function(value) {
   updateFont(value)
 });
+textFolder.add(params, "size").min(1).max(10).onFinishChange(function(value) {
+  updateFont(value)
+}).name('Size')
+textFolder.add(params, "height").min(1).max(10).onFinishChange(function(value) {
+  updateFont(value)
+}).name('Depth')
 
 // Lights
 ambentControls.add(ambientLight, 'intensity').min(0).max(5).name('Ambient Light Intensity')
@@ -464,6 +484,8 @@ group.castShadow = true
  */
 const clock = new THREE.Clock()
 
+
+
 const tick = () => {
   const elapsedTime = clock.getElapsedTime()
 
@@ -479,9 +501,29 @@ const tick = () => {
     //
     // object.rotation.y = Math.sin(elapsedTime) * .5 + Math.cos(elapsedTime) * .2
     // object.rotation.z = Math.sin(elapsedTime) * .75 + Math.sin(elapsedTime * .75) + 1
+
+
     object.rotation.x = Math.cos(elapsedTime) * .25 + Math.sin(elapsedTime * .85) * 2
+    // object.rotation.z = Math.sin(elapsedTime) * .45 + Math.cos(elapsedTime * .15) * 3
 
     object.rotation.y += Math.sin(0.0001 * i)
+    // object.rotation.z += Math.cos(0.00001)
+    // object.rotation.z += Math.sin(elapsedTime)
+    // object.rotation.x += Math.cos(elapsedTime)
+    // object2.position.y = Math.sin(t + i) * 1.5
+
+
+
+  })
+
+  sphereGroup.children.forEach((element, i) => {
+
+    const object = sphereGroup.children[i];
+    object.rotation.z = Math.cos(elapsedTime) * .35 - Math.sin(elapsedTime * .85) * i / 10
+    object.rotation.y = Math.sin(elapsedTime) * 3 + Math.sin(elapsedTime * .45) * 0.5
+    // object.rotation.z = Math.sin(elapsedTime) * .45 + Math.cos(elapsedTime * .15) * 3
+
+    object.rotation.y -= Math.cos(0.0002 * i)
     // object.rotation.z += Math.cos(0.00001)
     // object.rotation.z += Math.sin(elapsedTime)
     // object.rotation.x += Math.cos(elapsedTime)
