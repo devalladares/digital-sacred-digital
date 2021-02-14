@@ -196,7 +196,7 @@ function updateFont() {
   }
 
   fontLoader.load(
-    '../static/fonts/editorial.json',
+    './static/fonts/editorial.json',
     (font) => {
       // console.log('fontloaded')
       textGeometry = new THREE.TextGeometry(
