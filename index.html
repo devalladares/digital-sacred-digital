@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>04 - Webpack</title>
+  <link rel="stylesheet" href="/src/style.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.1.9/p5.js"></script>
+
+</head>
+
+<body>
+
+  <div id="logo">
+    <img src="../textures/ww/logo.png">
+  </div>
+
+  <div id="animlogo">
+    <div id='p5Div'> </div>
+  </div>
+
+  <div id="blocker" style="display: block">
+    <div id="instructions">
+    </div>
+  </div>
+
+
+
+  <div id="info">
+    <p style="color:#fc9708"></br></br></br>
+      In a world fast moving into the digital realm,</br>
+      into a overwhelming flurry of media and banner ads </br>
+      constantly vying for time and attention, is there a </br> space online where one finds peace?
+      </br></br>
+    <span style="color:#fff3e3">  Sacred, Digital Sacred </span> is a project by <a href="https://www.instagram.com/devethanvalladares/">Dev Valladares</a></br> exploring the limits and possibilities of using design to </br> create of transcendence, in cyberspace. Spaces designed </br> to slow down; to created to evoke an appreciation </br>
+      for life,
+      the universe, and reality; and perhaps, </br> to ask the big questions.
+      </br> </br> </br></br>
+      <a id="btn">Click the rotating button to enter </a>. You can use the </br> controls on the right to customize the mandala, change </br> the text and set the mood.
+    </p>
+  </div>
+
+  <div id="main" class="rotate" >
+
+    <img src="../textures/ww/main.png" width="750" height="750" style='z-index:110'>
+    </br> </br>
+    <button id="btn2">Enter Space</button>
+    </br>
+
+  </div>
+
+
+
+  <script src="./p5/p5_1.js"></script>
+
+  <canvas class="webgl"> </canvas>
+  <script type="module" src="./src/script14_color.js"></script>
+
+</body>
+
+</html>
