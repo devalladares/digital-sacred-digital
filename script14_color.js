@@ -523,14 +523,20 @@ window.addEventListener('resize', () => {
 /////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////
 // import './style.css'
-import * as THREE from './node_modules/three/build/three.module.js'
+
+
+import * as THREE from './build/three.module.js';
 import * as dat from './node_modules/three/examples/jsm/libs/dat.gui.module.js'
 import {
   OrbitControls
-} from './node_modules/three/examples/jsm/controls/OrbitControls.js'
+} from './examples/jsm/controls/OrbitControls.js';
 import {
   GLTFLoader
-} from './node_modules/three/examples/jsm/loaders/GLTFLoader.js';
+} from './examples/jsm/loaders/GLTFLoader.js';
+
+
+
+
 
 
 function randomInt(min, max) {
