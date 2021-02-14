@@ -526,7 +526,7 @@ window.addEventListener('resize', () => {
 
 
 import * as THREE from './build/three.module.js';
-import * as dat from './node_modules/three/examples/jsm/libs/dat.gui.module.js'
+import * as dat from './examples/jsm/libs/dat.gui.module.js';
 import {
   OrbitControls
 } from './examples/jsm/controls/OrbitControls.js';
