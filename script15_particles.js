@@ -646,8 +646,8 @@ const tick = () => {
   sphereGroup.children.forEach((element, i) => {
 
     const object = sphereGroup.children[i];
-    object.rotation.z = Math.cos(elapsedTime) * .35 - Math.sin(elapsedTime * .85) * i / 10
-    object.rotation.y = Math.sin(elapsedTime) * 3 + Math.sin(elapsedTime * .45) * 0.5
+    object.rotation.x = Math.cos(elapsedTime) * .45 - Math.sin(elapsedTime * .45)
+    object.rotation.y = Math.sin(elapsedTime) * 2 + Math.sin(elapsedTime * .45) * 0.25
     // object.rotation.z = Math.sin(elapsedTime) * .45 + Math.cos(elapsedTime * .15) * 3
 
     object.rotation.y -= Math.cos(0.0002 * i)
