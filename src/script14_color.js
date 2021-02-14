@@ -523,23 +523,15 @@ window.addEventListener('resize', () => {
 /////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////
 // import './style.css'
-import * as THREE from '../node_modules/three/build/three.module.js'
-import * as dat from '../node_modules/three/examples/jsm/libs/dat.gui.module.js'
+import * as THREE from './node_modules/three/build/three.module.js'
+import * as dat from './node_modules/three/examples/jsm/libs/dat.gui.module.js'
 import {
   OrbitControls
-} from '../node_modules/three/examples/jsm/controls/OrbitControls.js'
+} from './node_modules/three/examples/jsm/controls/OrbitControls.js'
 import {
   GLTFLoader
-} from '../node_modules/three/examples/jsm/loaders/GLTFLoader.js';
-// import {
-//   RGBELoader
-// } from '../node_modules/three/examples/jsm/loaders/RGBELoader.js';
-// import {
-//   RoughnessMipmapper
-// } from '../node_modules/three/examples/jsm/utils/RoughnessMipmapper.js';
-// import {
-//   createWater
-// } from './src/components/water.js';
+} from './node_modules/three/examples/jsm/loaders/GLTFLoader.js';
+
 
 function randomInt(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
