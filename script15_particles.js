@@ -100,13 +100,13 @@ var dirControls = lightControls.addFolder('Direction Light');
 // let updateColor = () => {
 
 const cols = {
-  color1: '#aabb4d',
-  // color2: '#0056ff',
-  color2: '#ff0505',
-  color3: 0x000000,
-  color3: 0xff00,
+  color1: '#4d641b',
+  color2: '#af7d7d',
+  // color3: 0x000000,
+  color3: '#ff0505',
   // color4: '#ffffff'
-  color4: '#d327f0'
+  // color4: '#d327f0'
+  color4: '#e1cfcf'
 }
 
 ambentControls.addColor(cols, 'color1').onChange(() => {
@@ -127,11 +127,11 @@ hemControls.addColor(cols, 'color2').onChange(() => {
 
 
 ambientLight = new THREE.AmbientLight()
-ambientLight.intensity = (0.56)
+ambientLight.intensity = (0.36)
 ambientLight.color.set(cols.color1)
 
 hemLight = new THREE.HemisphereLight(cols.color2, cols.color3, 0.5)
-hemLight.intensity = (0.7)
+hemLight.intensity = (0.3)
 hemLight.color.set(cols.color2, cols.color3, 0.5)
 // console.log(hemLight.color)
 
@@ -140,7 +140,7 @@ hemLight.color.set(cols.color2, cols.color3, 0.5)
 dirLight = new THREE.DirectionalLight()
 dirLight.position.set(1, 1, 1)
 dirLight.castShadow = true
-hemLight.intensity = (1.1)
+dirLight.intensity = (0.8)
 dirLight.color.set(cols.color4)
 
 
@@ -154,11 +154,47 @@ const material3 = new THREE.MeshBasicMaterial({
   // color: '#e2eadd',
   color: '#b2ded2'
 });
-// }
+
 
 // updateColor()
-const material2 = new THREE.MeshStandardMaterial()
 
+const matter = {
+  color: '#b2ded2',
+  emissive: '#fcdd00',
+  emissiveIntensity: 0.25,
+  metalness: 0.25,
+  roughness: 0.25
+}
+
+const material2 = new THREE.MeshStandardMaterial({
+  color: '#b2ded2',
+  emissive: '#fcdd00',
+  emissiveIntensity: 0.25,
+  metalness: 0.25,
+  roughness: 0.25
+})
+
+let materialF = gui.addFolder('Material');
+
+materialF.addColor(matter, 'color').onChange(() => {
+  material2.color.set(matter.color)
+}).name('Color')
+
+materialF.addColor(matter, 'emissive').onChange(() => {
+  material2.emissive.set(matter.emissive)
+}).name('Emissive')
+
+materialF.add(matter, 'emissiveIntensity').min(0).max(1).onChange(() => {
+  material2.emissiveIntensity = matter.emissiveIntensity
+}).name('EmissiveIntensity')
+
+materialF.add(matter, 'metalness').min(0).max(1).onChange(() => {
+  material2.metalness = matter.metalness
+}).name('Metalness')
+
+materialF.add(matter, 'roughness').min(0).max(1).onChange(() => {
+  material2.roughness = matter.roughness
+}).name('Roughness')
 
 
 /////////////////////////////////////////////////////////
@@ -430,7 +466,7 @@ particlesMaterial.vertexColors = true
 const particles = new THREE.Points(particlesGeometry, particlesMaterial)
 // scene.add(particles)
 particles.position.set(-1, 0, 0)
-particles.scale.set(10,10,10)
+particles.scale.set(10, 10, 10)
 
 
 
