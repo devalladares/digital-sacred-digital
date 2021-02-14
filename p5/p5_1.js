@@ -57,7 +57,7 @@ function draw() {
 
   pop()
 
-  if (frameCount % 60 === 0) {
+  if (frameCount % 40 === 0) {
     runSketch()
   }
 }
